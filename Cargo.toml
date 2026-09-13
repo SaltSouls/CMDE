@@ -1,0 +1,12 @@
+[package]
+name = "CMDE"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+clap = { version = "4.5.48", features = ["derive", "unicode"] }
+serde = { version = "1.0.226", features = ["derive"] }
+serde_json = { version = "1.0.145"}
+toml = { version = "0.9.7" }
+console = { version = "0.16.1" }
+indicatif = { version = "0.18.0", features = ["improved_unicode"] }
