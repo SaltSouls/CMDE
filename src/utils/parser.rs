@@ -162,7 +162,8 @@ pub struct Normalize {
 #[derive(Deserialize, Serialize, Debug, Clone, Default)]
 pub struct Subtitles {
     pub burn: Option<bool>,
-    pub tracks: Option<Tracks>
+    pub tracks: Option<Tracks>,
+    pub fonts: Option<Fonts>
 }
 
 #[derive(Deserialize, Serialize, Debug, Clone, Default)]
@@ -170,6 +171,11 @@ pub struct Tracks {
     pub copy: Option<bool>,
     #[serde(rename = "languageSelect")]
     pub language_select: Option<Vec<String>>,
+}
+
+#[derive(Deserialize, Serialize, Debug, Clone, Default)]
+pub struct Fonts {
+    pub copy: Option<bool>,
 }
 
 #[derive(Deserialize, Serialize, Debug, Clone, Default)]

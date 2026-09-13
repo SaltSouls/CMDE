@@ -165,6 +165,12 @@
         # Languages to include for copied tracks
         languageSelect = ["und", "eng", "jp", "zho"]
 
+    # Subtitle font management
+    [subtitles.fonts]
+        # Copy fonts from source (true/false)
+        copy = true
+
+
 
 # Additional tracks to merge with specific video files
 [additions]
