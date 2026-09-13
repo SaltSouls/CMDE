@@ -1,2 +1,7 @@
 /target
 /templates/
+/.idea/.gitignore
+/.idea/CMDE.iml
+/.idea/git_toolbox_prj.xml
+/.idea/modules.xml
+/.idea/vcs.xml

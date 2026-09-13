@@ -1,0 +1,183 @@
+# Container settings for video and audio
+[container]
+    # Output format for video and audio
+    format = { video = "mp4", audio = "opus" }
+    # Optimize for streaming (true/false)
+    optimize = true
+
+# Container metadata settings
+[container.metadata]
+    # Copy metadata from source file (true/false)
+    copy = true
+    # Copy chapters markers from source file (true/false)
+    copyChapters = true
+    # Add chapters markers from external file (e.g., <video_name>_metadata.txt) (true/false)
+    addChapters = true
+    # Individual metadata fields
+    title     = "{$title}"
+    artist    = "{$artist}"
+    album     = "{$album}"
+    date      = "{$date}"
+    genre     = "{$genre}"
+    language  = "{$lang}"
+    publisher = "{$publisher}"
+    copyright = "{$copyright}"
+    encodedBy = "{$encoded_by}"
+    comments  = ["{$comments}"]
+
+# Video stream settings
+[video]
+    # Video codec (options: h264, h265, av1, vp9)
+    codec = "av1"
+    # Quality setting (options: low, medium, high, ultra)
+    quality = "high"
+    # Use two-pass encoding (true/false)
+    twoPass = true
+
+    # Advanced video encoding settings
+    [video.advanced]
+        # Encoding preset (options: ultrafast, superfast, veryfast, faster, fast, medium, slow, slower, veryslow, placebo)
+        preset = "medium"
+        # Codec profile (options: basic, main, high)
+        profile = "main"
+        # Codec tuning (e.g., fastdecode for low-latency decoding)
+        tune = "ssim"
+        # Constant Rate Factor (0-63 for AV1, lower = better quality)
+        crf = 25
+        # Framerate (-1 = auto)
+        framerate = -1
+        # Keyframe interval in seconds
+        keyintSeconds = 5
+        # Custom FFmpeg video arguments
+        customArgs = [
+            "-svtav1-params",
+            "enable-dlf=0:tile-columns=4:tile-rows=3:lp=0:min-qp=20:max-qp=50"
+        ]
+
+    # Video picture processing settings
+    [video.picture]
+        # Bit depth for video (8 or 10)
+        bitDepth = 10
+
+    # Video picture sharpening settings
+    [video.picture.sharpen]
+        # Sharpening filter (options: none, low, medium, high)
+        preset = "medium"
+        # Luma matrix size for sharpening (must be odd)
+        lumaSize = 5
+        # Luma sharpening strength
+        lumaAmount = 1
+        # Chroma matrix size for sharpening (must be odd)
+        chromaSize = 3
+        # Chroma sharpening strength
+        chromaAmount = 0
+
+    # Video picture deinterlacing settings
+    [video.picture.deinterlace]
+        # Deinterlacing filter (options: none, low, medium, high)
+        preset = "medium"
+        # Output mode (options: frame, field)
+        mode = "frame"
+        # Field order (options: top, bottom, auto)
+        order = "auto"
+        # Frames to deinterlace (options: interlaced, all)
+        deint = "all"
+
+    # Video picture denoising settings
+    [video.picture.denoise]
+        # Denoising filter (options: none, low, medium, high)
+        preset = "medium"
+        # Spatial luma denoising strength
+        lumaSpatial = 1
+        # Spatial chroma denoising strength
+        chromaSpatial = 1
+        # Temporal luma denoising strength
+        lumaTemporal = 2
+        # Temporal chroma denoising strength
+        chromaTemporal = 2
+
+    # Video picture deblocking settings
+    [video.picture.deblock]
+        # Deblocking filter (options: none, low, medium, high)
+        preset = "none"
+        # Filter type (options: strong, weak)
+        mode = "weak"
+        # Deblocking strength (0 to 1)
+        strength = 0.5
+        # Block detection threshold (0 to 1)
+        threshold = 0.1
+
+
+# Audio stream settings
+[audio]
+    # Audio codec (options: flac, aac, eac3, opus, vorbis, pcm16, pcm24, pcm32, mp3)
+    codec = "opus"
+    # Quality setting (options: low, medium, high, ultra)
+    quality = "high"
+
+    # Audio track management
+    [audio.tracks]
+        # Copy audio tracks from source (true/false)
+        copy = true
+        # Languages to include for copied tracks
+        languageSelect = ["und", "eng", "jp", "zho"]
+
+    # Advanced audio encoding settings
+    [audio.advanced]
+        # Audio bitrate (e.g., 96000 for 96 kbps )
+        bitrate = "96k"
+        # Audio sample rate (e.g., 44100 for 44.1 kHz)
+        sampleRate = "44.1k"
+        # Number of audio channels
+        channels = 2
+        # Vorbis/mp3 VBR quality (0 to 10)
+        vbr = 4
+        # FLAC compression level (0 to 8)
+        compression = 5
+        # Custom FFmpeg audio arguments
+        customArgs = [ ]
+
+    # Audio normalization settings
+    [audio.normalize]
+        # Enable audio normalization (true/false)
+        enable = true
+        # Integrated loudness target in LUFS (-30 to -10)
+        target = -23
+        # Loudness range in LU (1 to 20)
+        range = 11
+        # Maximum true peak in dBTP (-5 to 0)
+        peak = -0.5
+        # Treat dual mono as stereo (true/false)
+        dualMono = false
+        # Enable linear normalization (true/false)
+        linearNormalize = true
+
+
+# Subtitle stream settings
+[subtitles]
+    # Burn subtitles into video
+    burn = false
+
+    # Subtitle track management
+    [subtitles.tracks]
+        # Copy subtitle tracks from source (true/false)
+        copy = true
+        # Languages to include for copied tracks
+        languageSelect = ["und", "eng", "jp", "zho"]
+
+
+# Additional tracks to merge with specific video files
+[additions]
+    # Map of video files to their associated audio and subtitle tracks
+    addons = [
+        { "some_path/my_video.mp4" = [
+            { type = "audio", file = "some_path/audio.mp3", name = "English", language = "eng" },
+            { type = "subs", file = "some_path/subtitles.srt", name = "English", language = "eng" },
+            { type = "font", file = "some_path/font.ttf" }
+        ]},
+        { "some_path/my_other_video.mp4" = [
+            { type = "audio", file = "some_path/other_audio.mp3", name = "English", language = "eng" },
+            { type = "subs", file = "some_path/other_subtitles.srt", name = "English", language = "eng" },
+            { type = "font", file = "some_path/other_font.ttf" }
+        ]}
+    ]
